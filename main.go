@@ -19,6 +19,7 @@ type nodeData struct {
 	bootKey      string
 	friendlyName string
 	nodeHost     string
+	nodePorts    []string
 }
 
 func main() {
@@ -29,9 +30,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if !checkNodePorts(existingNodeData.nodePorts) {
+		// either User needs to check firewall settings or change to port in config-node.properties
+	}
+
 	// check node boot key
 	if !checkBootKey(existingNodeData) {
 		// replace with new bootkey
+	}
+
+	if !isHarvestKeyRegistered(existingNodeData.harvestKey) {
+		// register Harvest Key
 	}
 
 }
@@ -73,6 +83,19 @@ func getNodeData(path string) (nodeData, error) {
 		return data, err
 	}
 	data.bootKey, err = getKeyValue(path+"/resources/config-user.properties", "bootKey")
+	if err != nil {
+		return data, err
+	}
+
+	data.nodePorts[0], err = getKeyValue(path+"/resources/config-node.properties", "port")
+	if err != nil {
+		return data, err
+	}
+	data.nodePorts[1], err = getKeyValue(path+"/resources/config-node.properties", "apiPort")
+	if err != nil {
+		return data, err
+	}
+	data.nodePorts[2], err = getKeyValue(path+"/resources/config-node.properties", "dbrbPort")
 	if err != nil {
 		return data, err
 	}
