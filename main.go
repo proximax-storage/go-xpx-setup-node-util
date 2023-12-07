@@ -8,11 +8,14 @@ import (
 	"os"
 	"regexp"
 	"strings"
-
+	"github.com/harrim91/docker-compose-go/client"
 	"github.com/manifoldco/promptui"
 )
 
-const ()
+const (
+	apiNode = "http://aldebaran.xpxsirius.io:3000"
+	sleepTime = time.Minute
+)
 
 type nodeData struct {
 	harvestKey   string
@@ -42,6 +45,15 @@ func main() {
 
 	if !isHarvestKeyRegistered(existingNodeData.harvestKey) {
 		// register Harvest Key
+	}
+
+	while isNodeRunning(setupDir+"/docker-compose.yml"){
+		nodeHeight := getNodeHeight(nodeHost, nodePort)
+		upgradeHeight := getUpgradeHeight(apiNode)
+		if nodeHeight == upgradeHeight - 1 {
+			upgradeNode()
+		}
+		time.Sleep(sleepTime)
 	}
 
 }
@@ -133,4 +145,16 @@ func checkBootKey(nodeData) bool {
 	}
 
 	return true
+}
+
+func isNodeRunning(composePath string) bool{
+	compose := client.New(&client.GlobalOptions{
+		Files: []string{
+			composePath,
+		},
+	})
+	// psCh, err := compose.RunQuery(ps,&client.GlobalOptions{})
+	// if err != nil {
+	//   log.Fatalln(err)
+	// }
 }
