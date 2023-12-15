@@ -52,9 +52,12 @@ func main() {
 	// check if harvest key is set, if yes then register it if it's not registered yet
 	harvestKeyChecker := setup.NewHarvestKeyChecker(client)
 	log.Println("Checking harvest public key registration")
-	if setup.IsValidPrivateKey(client, configUpdater.HarvestKey) && !harvestKeyChecker.IsRegistered(ctx, configUpdater.HarvestKey) && setup.PromptConfirmation("Register harvest key?") {
-		signerPrivateKey := setup.PromptKey("Enter private key to sign the transaction to register the harvest key")
-		harvestKeyChecker.Register(ctx, cfg, configUpdater.HarvestKey, signerPrivateKey)
+	if setup.IsValidPrivateKey(client, configUpdater.HarvestKey) && !harvestKeyChecker.IsRegistered(ctx, configUpdater.HarvestKey) {
+		log.Println("Harvest key is not registered")
+		if setup.PromptConfirmation("Register harvest key?") {
+			signerPrivateKey := setup.PromptKey("Enter private key to sign the transaction to register the harvest key")
+			harvestKeyChecker.Register(ctx, cfg, configUpdater.HarvestKey, signerPrivateKey)
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////
