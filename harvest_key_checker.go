@@ -40,7 +40,7 @@ func (h *HarvestKeyChecker) Register(ctx context.Context, cfg *sdk.Config, harve
 		log.Fatal("Error creating signer account: ", err)
 	}
 
-	harvesterAccount, err := h.Client.NewAccountFromPrivateKey(harvestKey)
+	harvesterAccount, err := h.Client.NewAccountFromPublicKey(harvestKey)
 	if err != nil {
 		log.Fatal("Error creating harvester account: ", err)
 	}
@@ -53,7 +53,7 @@ func (h *HarvestKeyChecker) Register(ctx context.Context, cfg *sdk.Config, harve
 	htx, err := h.Client.NewHarvesterTransaction(
 		sdk.NewDeadline(time.Hour),
 		sdk.AddHarvester,
-		harvesterAccount.PublicAccount,
+		harvesterAccount,
 	)
 
 	res, err := sync.Announce(ctx, cfg, ws, signerAccount, htx)
@@ -62,7 +62,7 @@ func (h *HarvestKeyChecker) Register(ctx context.Context, cfg *sdk.Config, harve
 	}
 
 	if res.Err() != nil {
-		log.Fatal("Error confirming AddHarvesterTransaction: ", err)
+		log.Fatal("Error confirming AddHarvesterTransaction: ", res.Err())
 	}
 
 	log.Println("Harvest key registered successfully")
