@@ -7,6 +7,5 @@ const (
 	DbrbConfig                   = "[dbrb]\n\ntransactionTimeout = 1h"
 	DefaultInstallationDirectory = "/mnt/siriuschain"
 	DefaultRestUrl               = "http://aldebaran.xpxsirius.io:3000"
-	// BlockchainDockerImage TODO: replace with the name of the publid image
-	BlockchainDockerImage = "249767383774.dkr.ecr.ap-southeast-1.amazonaws.com/proximax-catapult-server:develop-jenkins-build-144"
+	BlockchainDockerImage        = "proximax/proximax-sirius-chain:v1.3.1-bullseye"
 )
