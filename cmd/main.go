@@ -77,7 +77,7 @@ func main() {
 		log.Fatal("Error getting network version: ", err)
 	}
 
-	requiredNetworkVersion := sdk.NewBlockChainVersion(1, 3, 0, 0)
+	requiredNetworkVersion := sdk.NewBlockChainVersion(1, 3, 1, 0)
 	if networkVersion.BlockChainVersion < requiredNetworkVersion {
 		log.Fatal("Expected network version ", requiredNetworkVersion.String(), " is not yet set")
 	}
