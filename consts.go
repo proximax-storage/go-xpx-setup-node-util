@@ -7,5 +7,5 @@ const (
 	DbrbConfig                   = "[dbrb]\n\ntransactionTimeout = 1h"
 	DefaultInstallationDirectory = "/mnt/siriuschain"
 	DefaultRestUrl               = "https://aldebaran.xpxsirius.io"
-	BlockchainDockerImage        = "proximax/proximax-sirius-chain:v1.4.1-bullseye"
+	BlockchainDockerImage        = "proximax/proximax-sirius-chain:v1.4.2-bullseye"
 )
