@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/manifoldco/promptui v0.9.0
-	github.com/proximax-storage/go-xpx-chain-sdk v0.8.0
+	github.com/proximax-storage/go-xpx-chain-sdk v0.8.2
 	github.com/proximax-storage/go-xpx-chain-sync v1.1.3
 	github.com/proximax-storage/go-xpx-crypto v0.1.0
 )

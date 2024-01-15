@@ -6,6 +6,7 @@ const (
 	ZeroKey                      = "0000000000000000000000000000000000000000000000000000000000000000"
 	DbrbConfig                   = "[dbrb]\n\ntransactionTimeout = 1h"
 	DefaultInstallationDirectory = "/mnt/siriuschain"
-	DefaultRestUrl               = "https://aldebaran.xpxsirius.io"
+	DefaultRestUrl               = "https://arcturus.xpxsirius.io"
 	BlockchainDockerImage        = "proximax/proximax-sirius-chain:v1.4.2-bullseye"
+	NewBlockchainVersion         = "1.4.2.0"
 )

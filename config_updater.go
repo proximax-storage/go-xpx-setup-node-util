@@ -148,10 +148,20 @@ func copyFileAndReplace(src, dst string, replacements map[string]string) {
 		if value, ok := replacements[key]; ok {
 			line = key + " = " + value
 		}
-		lines = append(lines, line)
+		newLines := strings.Split(line, "\n")
+		for _, newLine := range newLines {
+			lines = append(lines, newLine)
+		}
 	}
 
-	for _, line := range lines {
+	for i, line := range lines {
+		if i > 0 {
+			previousLine := lines[i-1]
+			if line == previousLine {
+				continue
+			}
+		}
+
 		_, err = io.WriteString(destination, line+"\n")
 		if err != nil {
 			log.Fatal("Failed to write to file ", dst, ": ", err)
