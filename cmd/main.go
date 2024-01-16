@@ -77,7 +77,7 @@ func main() {
 		log.Fatal("Error getting network version: ", err)
 	}
 
-	requiredNetworkVersion := sdk.NewBlockChainVersion(1, 3, 1, 0)
+	requiredNetworkVersion := setup.ParseBlockchainVersion(setup.NewBlockchainVersion)
 	if networkVersion.BlockChainVersion < requiredNetworkVersion {
 		log.Fatal("Expected network version ", requiredNetworkVersion.String(), " is not yet set")
 	}
@@ -179,13 +179,17 @@ func main() {
 		log.Fatal("Error reading docker-compose.yml: ", err)
 	}
 	dockerComposeLines := strings.Split(string(dockerComposeBytes), "\n")
+	for len(dockerComposeLines) > 2 && dockerComposeLines[len(dockerComposeLines)-2] == "" {
+		length := len(dockerComposeLines)
+		index := length - 2
+		dockerComposeLines = append(dockerComposeLines[:index], dockerComposeLines[index+1:]...)
+	}
 	catapultSectionFound := false
 	isCatapultPortsSection := false
 	for index, line := range dockerComposeLines {
 		if catapultSectionFound {
 			if strings.Contains(line, "image") {
-				s := strings.Split(line, "\"")
-				dockerComposeLines[index] = s[0] + "\"" + setup.BlockchainDockerImage + "\""
+				dockerComposeLines[index] = "    image: " + setup.BlockchainDockerImage
 			} else if isCatapultPortsSection {
 				if !strings.Contains(line, "-") {
 					dockerComposeLines = append(dockerComposeLines[:index+1], dockerComposeLines[index:]...)
