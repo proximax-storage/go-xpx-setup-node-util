@@ -203,7 +203,7 @@ func main() {
 			} else if strings.Contains(line, "ports:") {
 				isCatapultPortsSection = true
 			}
-		} else if strings.Contains(line, "catapult:") || strings.Contains(line, "catapult-api-node:") {
+		} else if strings.Contains(line, "catapult:") || strings.Contains(line, "catapult-api-node:") || strings.Contains(line, "mainnet-peer:") {
 			catapultSectionFound = true
 		}
 	}
