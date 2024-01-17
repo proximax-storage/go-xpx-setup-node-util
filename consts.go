@@ -8,5 +8,5 @@ const (
 	DefaultInstallationDirectory = "/mnt/siriuschain"
 	DefaultRestUrl               = "https://arcturus.xpxsirius.io"
 	BlockchainDockerImage        = "proximax/proximax-sirius-chain:v1.4.2-bullseye"
-	NewBlockchainVersion         = "1.4.2.0"
+	RequiredBlockchainVersion    = "1.3.1.0"
 )
