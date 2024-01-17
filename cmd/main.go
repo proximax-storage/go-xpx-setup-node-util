@@ -141,7 +141,13 @@ func main() {
 	//////////////////////////////////////////////////////////////////////////
 	// Stop node
 	log.Println("Shutting down node")
-	cmd := exec.Command("docker-compose", "down")
+	var cmd *exec.Cmd = nil
+	_, err = exec.LookPath("docker-compose")
+	if err == nil {
+		cmd = exec.Command("docker-compose", "down")
+	} else {
+		cmd = exec.Command("docker", "compose", "down")
+	}
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Println(string(out))
